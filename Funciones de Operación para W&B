@@ -1,0 +1,114 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMF7E6m+uZh/eikoTbme/3P",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/RonaldRecinos/DAS172/blob/main/Funciones%20de%20Operaci%C3%B3n%20para%20W%26B\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "aZGY1sGduBrY"
+      },
+      "outputs": [],
+      "source": [
+        "def validar_matrices(cargas, capacidades):\n",
+        "    N = len(cargas)\n",
+        "    if N < 2: return False\n",
+        "    M = len(cargas[0])\n",
+        "    if M < 2: return False\n",
+        "    if len(capacidades) != N: return False\n",
+        "\n",
+        "    for i in range(N):\n",
+        "        if len(cargas[i]) != M or len(capacidades[i]) != M:\n",
+        "            return False\n",
+        "        for j in range(M):\n",
+        "            if cargas[i][j] < 0 or capacidades[i][j] <= 0:\n",
+        "                return False\n",
+        "    return True\n",
+        "\n",
+        "def calcular_ocupacion(cargas, capacidades):\n",
+        "    N = len(cargas)\n",
+        "    M = len(cargas[0])\n",
+        "    porcentajes = []\n",
+        "    sobrecargadas = []\n",
+        "\n",
+        "    for i in range(N):\n",
+        "        fila_porc = []\n",
+        "        for j in range(M):\n",
+        "            ocupacion = (cargas[i][j] / capacidades[i][j]) * 100.0\n",
+        "            fila_porc.append(ocupacion)\n",
+        "            if ocupacion > 100.0:\n",
+        "                sobrecargadas.append((i, j))\n",
+        "        porcentajes.append(fila_porc)\n",
+        "\n",
+        "    return porcentajes, sobrecargadas\n",
+        "\n",
+        "def evaluar_balance(cargas, tolerancia_kg):\n",
+        "    N = len(cargas)\n",
+        "    M = len(cargas[0])\n",
+        "    pesos_filas = [sum(fila) for fila in cargas]\n",
+        "\n",
+        "    suma_izq = 0\n",
+        "    suma_der = 0\n",
+        "    mitad = M // 2\n",
+        "\n",
+        "    for i in range(N):\n",
+        "        for j in range(mitad):\n",
+        "            suma_izq += cargas[i][j]\n",
+        "\n",
+        "        # Si las columnas son impares, el inicio derecho salta la central\n",
+        "        inicio_der = mitad if M % 2 == 0 else mitad + 1\n",
+        "        for j in range(inicio_der, M):\n",
+        "            suma_der += cargas[i][j]\n",
+        "\n",
+        "    desbalance = abs(suma_izq - suma_der)\n",
+        "    estado = desbalance <= tolerancia_kg\n",
+        "\n",
+        "    return pesos_filas, desbalance, estado\n",
+        "\n",
+        "def extraer_submatriz_critica(porcentajes, k, p):\n",
+        "    N = len(porcentajes)\n",
+        "    M = len(porcentajes[0])\n",
+        "    max_promedio = -1\n",
+        "    submatriz_critica = []\n",
+        "\n",
+        "    for i in range(N - k + 1):\n",
+        "        for j in range(M - p + 1):\n",
+        "            suma_sub = 0\n",
+        "            for x in range(k):\n",
+        "                for y in range(p):\n",
+        "                    suma_sub += porcentajes[i+x][j+y]\n",
+        "            promedio = suma_sub / (k * p)\n",
+        "\n",
+        "            if promedio > max_promedio:\n",
+        "                max_promedio = promedio\n",
+        "                submatriz_critica = [[porcentajes[i+x][j+y] for y in range(p)] for x in range(k)]\n",
+        "\n",
+        "    return submatriz_critica"
+      ]
+    }
+  ]
+}
