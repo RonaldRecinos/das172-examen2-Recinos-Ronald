@@ -1,0 +1,64 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPoN/KF81a/+aBccoi7LOVk",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/RonaldRecinos/DAS172/blob/main/Evaluaci%C3%B3n%20de%20Balancey%20Simetr%C3%ADa\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "tg3B35WGfj2D"
+      },
+      "outputs": [],
+      "source": [
+        "def evaluar_balance(cargas, tolerancia):\n",
+        "    n, m = len(cargas), len(cargas[0])\n",
+        "    pesos_longitudinales = []\n",
+        "    suma_izq = 0\n",
+        "    suma_der = 0\n",
+        "    mitad = m // 2\n",
+        "\n",
+        "    for i in range(n):\n",
+        "        # Sumatoria de fila longitudinal\n",
+        "        pesos_longitudinales.append(sum(cargas[i]))\n",
+        "\n",
+        "        # Separación lateral babor/estribor\n",
+        "        suma_izq += sum(cargas[i][:mitad])\n",
+        "\n",
+        "        if m % 2 == 0:\n",
+        "            suma_der += sum(cargas[i][mitad:])\n",
+        "        else:\n",
+        "            # Si M es impar, omitimos la columna central (mitad)\n",
+        "            suma_der += sum(cargas[i][mitad+1:])\n",
+        "\n",
+        "    desbalance = abs(suma_izq - suma_der)\n",
+        "    balance_aprobado = desbalance <= tolerancia\n",
+        "\n",
+        "    return pesos_longitudinales, desbalance, balance_aprobado"
+      ]
+    }
+  ]
+}
