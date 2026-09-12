@@ -18,30 +18,29 @@
     {
       "cell_type": "code",
       "source": [
-        "def validar_matrices(cargas, capacidades):\n",
-        "    n_cargas, n_cap = len(cargas), len(capacidades)\n",
-        "\n",
-        "    # Validar tamaño mínimo de filas (N >= 2)\n",
-        "    if n_cargas < 2 or n_cap < 2 or n_cargas != n_cap:\n",
-        "        return False\n",
-        "\n",
-        "    m_cargas, m_cap = len(cargas[0]), len(capacidades[0])\n",
-        "\n",
-        "    # Validar tamaño mínimo de columnas (M >= 2) y que coincidan\n",
-        "    if m_cargas < 2 or m_cap < 2 or m_cargas != m_cap:\n",
-        "        return False\n",
-        "\n",
-        "    for i in range(n_cargas):\n",
-        "        # Validar que sea una matriz regular (todas las filas del mismo tamaño)\n",
-        "        if len(cargas[i]) != m_cargas or len(capacidades[i]) != m_cap:\n",
-        "            return False\n",
-        "\n",
-        "        for j in range(m_cargas):\n",
-        "            # Validar restricciones físicas (peso >= 0, capacidad > 0)\n",
-        "            if cargas[i][j] < 0 or capacidades[i][j] <= 0:\n",
-        "                return False\n",
-        "\n",
-        "    return True"
+def validar_matrices(cargas, capacidades):
+    n_cargas, n_cap = len(cargas), len(capacidades)
+    
+    # Validar tamaño mínimo de filas (N >= 2)
+    if n_cargas < 2 or n_cap < 2 or n_cargas != n_cap:
+        return False
+        
+    m_cargas, m_cap = len(cargas[0]), len(capacidades[0])
+    
+    # Validar tamaño mínimo de columnas (M >= 2) y que coincidan
+    if m_cargas < 2 or m_cap < 2 or m_cargas != m_cap:
+        return False
+        
+    for i in range(n_cargas):
+        # Validar que sea una matriz regular (todas las filas del mismo tamaño)
+        if len(cargas[i]) != m_cargas or len(capacidades[i]) != m_cap:
+            return False
+            
+        for j in range(m_cargas):
+            # Validar restricciones físicas (peso >= 0, capacidad > 0)
+            if cargas[i][j] < 0 or capacidades[i][j] <= 0:
+                return False
+    return True
       ],
       "metadata": {
         "id": "fq1B_G1PbmjY"
@@ -51,3 +50,4 @@
     }
   ]
 }
+
