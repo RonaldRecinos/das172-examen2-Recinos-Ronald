@@ -146,9 +146,6 @@ cargo_hold_project/
 
 ## Instalación y uso
 
-Requiere **Python 3.8+** (no usa dependencias externas, solo librería
-estándar).
-
 ### Desde terminal / Google Colab
 
 ```bash
@@ -160,7 +157,7 @@ cd <tu-repositorio>
 python main.py
 ```
 
-### Desde Google Colab (subiendo a GitHub)
+### Desde Google Colab
 
 ```python
 # En una celda de Colab
@@ -169,8 +166,7 @@ python main.py
 !python main.py
 ```
 
-### Uso del módulo en tu propio código
-
+### Uso del módulo 
 ```python
 from cargo_hold import (
     validar_matrices,
