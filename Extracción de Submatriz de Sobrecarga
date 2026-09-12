@@ -1,0 +1,61 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyO5JmBTdl1fawdIa2E1kVrz",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/RonaldRecinos/das172-examen2-Recinos-Ronald/blob/main/Extracci%C3%B3n%20de%20Submatriz%20de%20Sobrecarga\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "9tlNCpF5gXDP"
+      },
+      "outputs": [],
+      "source": [
+        "def extraer_submatriz_critica(porcentajes, k, p):\n",
+        "    n, m = len(porcentajes), len(porcentajes[0])\n",
+        "    max_promedio = -1\n",
+        "    mejor_submatriz = []\n",
+        "\n",
+        "    # Ventana deslizante para encontrar la submatriz\n",
+        "    for i in range(n - k + 1):\n",
+        "        for j in range(m - p + 1):\n",
+        "            # Extraer sección k x p\n",
+        "            sub = [fila[j:j+p] for fila in porcentajes[i:i+k]]\n",
+        "\n",
+        "            # Calcular promedio de esta sección\n",
+        "            suma_total = sum(sum(fila) for fila in sub)\n",
+        "            promedio = suma_total / (k * p)\n",
+        "\n",
+        "            # Guardar la que tenga mayor promedio\n",
+        "            if promedio > max_promedio:\n",
+        "                max_promedio = promedio\n",
+        "                mejor_submatriz = sub\n",
+        "\n",
+        "    return mejor_submatriz"
+      ]
+    }
+  ]
+}
